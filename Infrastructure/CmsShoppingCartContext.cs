@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CmsShoppingCart.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace CmsShoppingCart.Infrastructure
         {
 
         }
+
+        public DbSet<Page> pages { get; set; }
     }
 }
