@@ -47,7 +47,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
 
         [HttpPost]
         //admin/pages/Create
-
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Page page)
         {
             if (ModelState.IsValid)
@@ -66,8 +66,64 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                 context.Add(page);
                 await context.SaveChangesAsync();
 
+                TempData["Success"] = "Page Has been Created";
+                return RedirectToAction("Index");
+
+            }
+            return View(page);
+        }
+
+        [HttpGet]
+        //GET area/Pages/Edit/5
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            Page page = await context.pages.FindAsync(id);
+            if (page == null)
+            {
+                return NotFound();
+            }
+            return View(page);
+        }
+        public async Task<IActionResult> Edit (Page page)
+        {
+            if (ModelState.IsValid)
+            {
+
+
+                page.Slug = page.Id == 1 ? "home" : page.Title.ToLower().Replace("", "-");
+
+                var slug = await context.pages.Where(x=>x.Id!=page.Id).FirstOrDefaultAsync(x => x.Slug == page.Slug);
+                if (slug != null)
+                {
+                    ModelState.AddModelError("", "Title Already Exists");
+                    return View(page);
+                }
+                context.Add(page);
+                await context.SaveChangesAsync();
+
+                TempData["Success"] = "Page Has been Created";
+                return RedirectToAction("Edit",new { id=page.Id});
+
+            }
+            return View(page);
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            Page page = await context.pages.FindAsync(id);
+            if (page == null)
+            {
+                TempData["DeletPage"] = "Page Not Found";
+
+            }
+            else
+            {
+                context.pages.Remove(page);
+                await context.SaveChangesAsync();
+                TempData["pagesuccess"] = "Page Delted Successuflly";
                 return RedirectToAction("Index");
             }
+
             return View(page);
         }
     }

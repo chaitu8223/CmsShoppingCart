@@ -21,7 +21,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="Pages" asp-action="Index">Pages</a>
                         </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Categories" asp-action="Index">Categories</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -29,7 +32,8 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            @RenderBody()
+            <partial name="_NotificationPartial" />
+                     @RenderBody()
         </main>
     </div>
 

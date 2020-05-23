@@ -47,16 +47,20 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Sorting)
                 </td>*@
-                <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { })
-                    @Html.ActionLink("Details", "Details", new { })
-                    @Html.ActionLink("Delete", "Register", new { })*@
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { })
+        @Html.ActionLink("Details", "Details", new { })
+        @Html.ActionLink("Delete", "Register", new { })*@
 
 
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                @if (item.Slug != "home")
+                {
+                    <a class="confirmatiodelete" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                }
+            </td>
             </tr>
         }
     </tbody>
